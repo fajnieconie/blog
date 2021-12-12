@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="md:container md:mx-auto gap-x-10 mt-24 block">
+    <div class="content w-11/12 flex flex-col gap-10 inline-flex">
+        {% for post in post_list %}
+        <div class="border border-gray-100 item flex-auto p-2 row-span-3 bg-gray-50 rounded-md cart md:container p-3">
+            <div class="item__header font-bold mb-3">
+                {{ post.title }}
+            </div>
+            <div class="separator w-100 md:w-auto border-b border-gray-200"></div>
+            <div class="item__content text-justify mt-3 mb-3">
+                {{ post.content|slice:":200" }}
+            </div>
+            <div class="separator w-100 md:w-auto border-b border-gray-200"></div>
+            <div class="item__information mt-3 text-xs float-right">
+                <span>Dodano przez: </span><strong>{{ post.author }}</strong> | {{ post.created_date}}
+            </div>
+            <div class="item__action">
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="sidebar w-full md:w-auto inline-flex fixed">
+        <div class="row-span-2 bg-gray-100 rounded-md cart md:container p-2">
+            asdasdas
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+        <p class="card-text">{{post.content|slice:":200" }}</p>
+
+    </div>
+</div>
+{% endblock %}
