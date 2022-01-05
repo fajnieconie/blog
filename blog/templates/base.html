@@ -8,10 +8,18 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <title>Title</title>
 </head>
-<body>
-{% block navbar %} {% include 'main/navbar.html' %} {% endblock navbar %}
-{% block content %}
+<body class="bg-gray-100">
+<div class="flex flex-col h-screen">
+    <header class="w-full sticky top-0">
+        {% block navbar %} {% include 'main/navbar.html' %} {% endblock navbar %}
+    </header>
 
-{% endblock content %}
+    <main class="flex-1 m-auto">
+        {% block content %} {% endblock content %}
+    </main>
+    <footer class="w-full relative bottom-0">
+        {% block footer %} {% include 'main/footer.html' %} {% endblock footer %}
+    </footer>
+</div>
 </body>
 </html>

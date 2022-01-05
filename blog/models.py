@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 STATUS = (
     (0, "Szkic"),
@@ -12,11 +13,12 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     content = models.TextField()
-    created_date = models.DateTimeField(
-        default=timezone.now(), blank=False, null=False)
+    created_date = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField(
         blank=True, null=True)
+    image = models.ImageField(upload_to='media/img')
     status = models.IntegerField(choices=STATUS, default=0)
+    tags = TaggableManager()
 
     def publish(self):
         self.published_date = timezone.now()
@@ -24,3 +26,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    comment = models.TextField(max_length=400)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_date']
+
+    def __str__(self):
+        return self.comment[:60]
