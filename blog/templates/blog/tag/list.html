@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="overflow-x-hidden px-6 py-8">
+        <div class="container justify-between mx-auto w-screen">
+            <h1 class="text-xl font-bold text-gray-700 md:text-2xl mb-5">Dostępne tagi</h1>
+            <div class="px-10 py-6 bg-white rounded-lg shadow-md">
+                {% for tag in tag_list %}
+                    <a href="/tag/{{ tag }}" class="mx-1 px-2 py-1 font-bold text-gray-500 bg-gray-50 rounded-lg hover:bg-gray-500 hover:text-gray-50">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
