@@ -10,4 +10,6 @@ def startswith(value, arg):
     return False
 
 
-
+@register.filter
+def multiply(value, arg):
+    return value * arg
