@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,18 +8,16 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <title>Title</title>
 </head>
-<body class="bg-gray-100">
-<div class="flex flex-col h-screen">
-    <header class="w-full sticky top-0">
+<body class="bg-gray-100 flex flex-col h-screen">
+    <header class="w-full fixed top-0 mt-0">
         {% block navbar %} {% include 'main/navbar.html' %} {% endblock navbar %}
     </header>
 
-    <main class="flex-1 m-auto">
+    <main class="flex-1 m-auto px-6 pt-[80px]">
         {% block content %} {% endblock content %}
     </main>
     <footer class="w-full relative bottom-0">
         {% block footer %} {% include 'main/footer.html' %} {% endblock footer %}
     </footer>
-</div>
 </body>
 </html>

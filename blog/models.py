@@ -16,7 +16,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField(
         blank=True, null=True)
-    image = models.ImageField(upload_to='media/img')
+    image = models.ImageField(upload_to='post_images')
     status = models.IntegerField(choices=STATUS, default=0)
     tags = TaggableManager()
 
@@ -29,7 +29,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     comment = models.TextField(max_length=400)
     created_date = models.DateTimeField(auto_now_add=True)
