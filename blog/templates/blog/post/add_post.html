@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+{% block title %} | Dodaj post {% endblock %}
 {% block content %}
-
 <div class="w-auto relative top-[50%] transform -translate-y-[50%] lg:w-[500px]">
-    <form class="bg-white shadow-md rounded px-12 pt-8 pb-10 mb-4" method="POST">
+    <form class="bg-white shadow-md rounded px-12 pt-8 pb-10 mb-4" method="POST" enctype="multipart/form-data">
         <h1 class="mb-5 font-bold text-3xl text-gray-800">Dodaj wpis</h1>
         {% csrf_token %}
         <div class="mb-4">
@@ -15,33 +15,43 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="slug">
                 Alias
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" maxlength="150" name="slug"  autofocus type="text" required>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" placeholder=""  maxlength="150" title="Dozwolony format: wpis-numer-30" name="slug"  autofocus type="text" required>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="content">
                 Treść
             </label>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" maxlength="150" name="content"  autofocus required> </textarea>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" name="content" autofocus required> </textarea>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
-                Zdjęcie
-            </label>
-            <input class="shadow appearance-none border text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" name="image" autofocus type="file" required>
+            <div class="flex items-center justify-center bg-grey-lighter" x-data="{ files: null }">
+                <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-gray-800 rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white hover:bg-gray-800">
+                    <svg  x-show="!files" class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                    </svg>
+                    <span x-show="!files" class="mt-2 text-base leading-normal">Dodaj zdjęcie</span>
+                    <strong x-show="files">Dodano zdjęcie: </strong><span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
+                    <input x-on:change="files = Object.values($event.target.files)" type="file" class="hidden" name="image" autofocus required accept="image/png, image/jpeg"/>
+                </label>
+            </div>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="status">
                 Status
             </label>
-            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3"  name="status"  autofocus required> 
-                <option>Dodany</option>
-                <option>Szkic</option>            
+            <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3"  name="status"  autofocus required>
+                {% for key, options in form.status.field.choices %}
+                    <option value="{{ key }}">{{ options }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="tags">
-                Tagi
-            </label>
+            <div class="inline-flex gap-x-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="tags">
+                    Tagi
+                </label>
+                <span class="text-xs">(wartości po przecinku)</span>
+            </div>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3" maxlength="150" name="tags"  autofocus type="text" required>
         </div>
         <div class="flex items-center justify-between p-2">
@@ -51,5 +61,4 @@
         </div>
     </form>
 </div>
-
 {% endblock %}

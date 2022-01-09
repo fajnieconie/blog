@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static "css/tailwind.css" %}">
     <script src="//unpkg.com/alpinejs" defer></script>
-    <title>Title</title>
+    <title>Blog {% block title %} {% endblock %}</title>
 </head>
 <body class="bg-gray-100 flex flex-col h-screen">
-    <header class="w-full fixed top-0 mt-0">
+    <header class="w-full fixed top-0 mt-0 z-10">
         {% block navbar %} {% include 'main/navbar.html' %} {% endblock navbar %}
     </header>
 

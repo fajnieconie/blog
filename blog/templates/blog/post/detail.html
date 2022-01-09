@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% block title %} | {{ object.title }} {% endblock %}
 {% block content %}
-<div class="container py-8 w-screen">
+<div class="container py-8">
     <div class="justify-between inline-flex min-h-[290px] w-full md:w-fit">
         <div class="bg-white m xl:w-[94%] rounded-lg shadow-md flex-auto w-auto">
             {% if object.image %}
@@ -68,16 +69,18 @@
                         </div>
                     </div>
                 {% endif %}
-                </br>
-                    <a href="{% url 'add_comment' post.pk %}" class="px-2 py-1 text-sm text-white bg-gray-800 rounded hover:bg-gray-500">Dodaj komentarz</a>
-                </br></br>
+                {% if user.is_authenticated %}
+                <div class="my-5">
+                    <a href="{% url 'add_comment' post.pk %}" class="px-2 py-1 my-5 text-sm text-white bg-gray-800 rounded hover:bg-gray-500">Dodaj komentarz</a>
+                </div>
+                {% endif %}
                 {% if post.comments.all|length > 0 %}
-                    <section id="comments" class="text-gray-700 scroll-mt-[1rem]">
+                    <section id="comments" class="text-gray-700 scroll-mt-[8rem]">
                         <span class="text-xl font-bold text-gray-700">Komentarze:</span>
                         <div class="mx-5 flex flex-col justify-between">
                             {% for comment in post.comments.all %}
                                 <div class="mt-5 flex flex-col p-2 rounded-lg border border-gray-100 bg-gray-50">
-                                    <strong>{{ comment.name }}</strong>
+                                    <strong>{{ comment.user }}</strong>
                                     <span class="break-all">{{ comment.comment }}</span>
                                     <span class="font-light text-xs text-gray-600 my-2 text-right">Opublikowano: {{ comment.created_date }}</span>
                                 </div>
@@ -100,7 +103,7 @@
                 </li>
                 <li class="mb-1 hover:bg-gray-100 text-red-500">
                     <form method="POST" action="{% url 'post-delete' post.pk %}" class="flex p-3 justify-start items-center"> {% csrf_token %}
-                        <button type="submit" class="flex text-center" onclick="return confirm('Are you shure?')">
+                        <button type="submit" class="flex text-center" onclick="return confirm('Czy na pewno usunąć wpis?')">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
@@ -109,7 +112,7 @@
                     </form>
                 </li>
                 <li class="mb-1 hover:bg-gray-100">
-                    <a href="/admin/blog/post/add" class=" flex p-3 justify-start items-center flex-row">
+                    <a href="{% url 'add_post' %}" class=" flex p-3 justify-start items-center flex-row">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>

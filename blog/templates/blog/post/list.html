@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %} | Wpisy {% endblock %}
 {% block content %}
 <div x-data="{ }">
     {% include  'messages/messages.html' with messages=messages %}
@@ -51,6 +52,11 @@
                                     <a href="/tag/{{ tag }}" class="mr-1 px-2 py-1 font-bold text-gray-500 bg-gray-50 rounded-lg hover:bg-gray-500 hover:text-gray-50">{{ tag }}</a>
                                 {% endfor %}
                             </div>
+                            {% if user.is_authenticated %}
+                                <div class="my-5">
+                                    <a href="{% url 'add_comment' post.pk %}" class="px-2 py-1 my-5 text-sm text-white bg-gray-800 rounded hover:bg-gray-500">Dodaj komentarz</a>
+                                </div>
+                            {% endif %}
                             {% if post.comments.all|length > 0 %}
                                 <div class="text-gray-700">
                                     <span class="text-xl font-bold text-gray-700">Komentarze:</span>
@@ -58,10 +64,10 @@
                                         {% for comment in post.comments.all|slice:":3" %}
                                             <div class="mt-5 flex flex-col p-2 rounded-lg border border-gray-100 bg-gray-50">
                                                 <div class="flex justify-between">
-                                                    <strong>{{ comment.name }}</strong>
-                                                    <span class="font-light text-sm text-gray-600 my-2">Opublikowano: {{ comment.created_date }}</span>
+                                                    <strong>{{ comment.user }}</strong>
                                                 </div>
                                                 <span class="break-all">{{ comment.comment }}</span>
+                                                <span class="font-light text-sm text-gray-600 my-2 ml-auto">Opublikowano: {{ comment.created_date }}</span>
                                             </div>
                                         {% endfor %}
                                         {% if post.comments.all|length >= 4 %}
