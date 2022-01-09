@@ -20,12 +20,13 @@ TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--0dz8uqh+)p4o7k^muagc8bi_k@k8)rz_)n=j*zrnd(wu-x_ap'
+with open(os.path.join(BASE_DIR, 'secrete_key.txt')) as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'fajnieconie-blog.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fajnieconie-blog.herokuapp.com', 'www.fajnieconie-blog.herokuapp.com']
 
 # Application definition
 
@@ -127,3 +128,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# HTTPS settings
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+
+# HSTS settings
+# SECURE_HSTS_SECONDS = 3153600  # year
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
