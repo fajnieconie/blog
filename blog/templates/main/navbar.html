@@ -31,6 +31,8 @@
                                 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium
                            {% endif %}"
                         >Wpisy</a>
+                        
+                        <a href="{% url 'add_post' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dodaj wpis</a>
 
                         <a href="/tag"
                            class="
@@ -46,6 +48,8 @@
                         <a href="{% url 'register' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Rejestracja</a>
 
                         <a href="{% url 'login' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+
+                        <a href="{% url 'logout' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
                     </div>
                 </div>
             </div>

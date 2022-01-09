@@ -54,6 +54,11 @@ def post_delete(request, pk):
 
     return JsonResponse({'data': False})
 
+class AddPostView(generic.CreateView):
+    model = Post
+    template_name = 'blog/post/add_post.html'
+    fields = '__all__'
+
 
 class PostByTag(generic.ListView):
     template_name = 'blog/post/list.html'
