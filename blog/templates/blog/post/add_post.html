@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Dodaj Wpis</h1>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Dodaj</button>
+{% if user.is_superuser %}
+<h1>Dodaj Wpis</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Dodaj</button>
+{% else %}
+    <h1> Przykro mi. Nie masz dostępu aby dodawać wpisy na tym blogu.</h1>
+{% endif %}
 {% endblock %}
