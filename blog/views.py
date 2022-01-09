@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from taggit.models import Tag
 from django.contrib import messages
@@ -17,8 +17,8 @@ class PostList(generic.ListView):
 
     def get_queryset(self):
         order_by = self.request.GET.get('sort')
-        context = Post.objects.filter(status=1).order_by('published_date') \
-            if order_by == "1" else Post.objects.filter(status=1).order_by('-published_date')
+        context = Post.objects.filter(status=1).order_by('created_date') \
+            if order_by == "1" else Post.objects.filter(status=1).order_by('-created_date')
 
         return context
 
@@ -54,10 +54,13 @@ def post_delete(request, pk):
 
     return JsonResponse({'data': False})
 
+
 class AddPostView(generic.CreateView):
     model = Post
     template_name = 'blog/post/add_post.html'
     fields = '__all__'
+    def get_success_url(self):
+        return reverse('post-details', kwargs={'pk': self.object.pk})
 
 
 class PostByTag(generic.ListView):
@@ -65,9 +68,9 @@ class PostByTag(generic.ListView):
 
     def get_queryset(self):
         order_by = self.request.GET.get('sort')
-        context = Post.objects.filter(tags=get_object_or_404(Tag, name=self.kwargs['slug'])).order_by('published_date') \
+        context = Post.objects.filter(tags=get_object_or_404(Tag, name=self.kwargs['slug'])).order_by('created_date') \
             if order_by == "1" else Post.objects.filter(tags=get_object_or_404(Tag, name=self.kwargs['slug'])).order_by(
-            '-published_date')
+            '-created_date')
         return context
 
     def get_context_data(self, **kwargs):
