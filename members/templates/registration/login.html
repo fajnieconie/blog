@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Register{% endblock %}
+{% block title %} | Logowanie {% endblock %}
 {% block content %}
     <div class="w-full relative top-[50%] transform -translate-y-[50%] lg:w-[500px]">
         <form class="bg-white shadow-md rounded px-12 pt-8 pb-10 mb-4" method="POST">
@@ -31,13 +31,10 @@
                     </ul>
                 {% endif %}
             </div>
-            <div class="flex items-center justify-between p-2">
-                <button class="bg-gray-800 hover:bg-blue-500 text-white font-bold py-2 px-4 mr-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <div class="p-2 ">
+                <button class="bg-gray-800 hover:bg-blue-500 text-white font-bold py-2 px-4 mr-5 rounded focus:outline-none focus:shadow-outline w-full" type="submit">
                     Zaloguj
                 </button>
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                    Zapomniałeś hasła?
-                </a>
             </div>
         </form>
     </div>

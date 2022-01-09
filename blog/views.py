@@ -4,8 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from taggit.models import Tag
 from django.contrib import messages
-from .forms import CommentForm
-
+from .forms import CommentForm, PostForm
 from .models import Post, Comment
 
 
@@ -46,6 +45,7 @@ class DeletePostView(generic.DeleteView):
         messages.success(self.request, 'Usunięto element!')
         return reverse_lazy('home')
 
+
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
@@ -59,7 +59,12 @@ def post_delete(request, pk):
 class AddPostView(generic.CreateView):
     model = Post
     template_name = 'blog/post/add_post.html'
-    fields = '__all__'
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse('post-details', kwargs={'pk': self.object.pk})
 
@@ -68,12 +73,14 @@ class AddCommentView(generic.CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'blog/post/add_comment.html'
+
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
+        form.instance.user = self.request.user
         return super().form_valid(form)
-    def get_success_url(self):
-       return reverse('post-details', kwargs={'pk': self.object.post.pk})
 
+    def get_success_url(self):
+        return reverse('post-details', kwargs={'pk': self.object.post.pk})
 
 
 class PostByTag(generic.ListView):
