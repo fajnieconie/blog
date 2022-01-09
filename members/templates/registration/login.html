@@ -1,16 +1,44 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 {% block content %}
-
-<h1>Login...</h1>
-<br><br>
-
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button>Login</button>
-    </form>
-</div>
-
+    <div class="w-full relative top-[50%] transform -translate-y-[50%] lg:w-[500px]">
+        <form class="bg-white shadow-md rounded px-12 pt-8 pb-10 mb-4" method="POST">
+            <h1 class="mb-5 font-bold text-3xl text-gray-800">Logowanie</h1>
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    {{ form.username.label }}
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3 {% if form.errors.username %} border-red-500 {% endif %}" maxlength="150" name="username" id="id_username" autofocus type="text" placeholder="{{ form.username.label }}" required autocomplete="username">
+                {% if form.errors.username %}
+                    <ul>
+                        {% for error in form.errors.username %}
+                            <li class="text-red-500 text-xs italic">{{ error|escape}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="id_password1">
+                    {{ form.password.label }}
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline {% if form.errors.password %} border-red-500 {% endif %}" name="password" id="id_password" type="password" placeholder="******************" required autocomplete="new-password">
+                {% if form.errors.password %}
+                    <ul>
+                        {% for error in form.errors.password %}
+                            <li class="text-red-500 text-xs italic">{{ error|escape}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="flex items-center justify-between p-2">
+                <button class="bg-gray-800 hover:bg-blue-500 text-white font-bold py-2 px-4 mr-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Zaloguj
+                </button>
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                    Zapomniałeś hasła?
+                </a>
+            </div>
+        </form>
+    </div>
 {% endblock %}
