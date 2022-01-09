@@ -2,13 +2,27 @@
 {% block content %}
 
 
-{% if user.is_authenticated %}
-<h1>Dodaj komentarz</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button>Dodaj komentarz</button>
-{% else %}
-    <h1> Zaloguj się aby dodawać komentarze.</h1>
-{% endif %}
+    <div class="w-full relative top-[50%] transform -translate-y-[50%] lg:w-[500px]">
+        <form class="bg-white shadow-md rounded px-12 pt-8 pb-10 mb-4" method="POST">
+            <h1 class="mb-5 font-bold text-3xl text-gray-800">Dodaj komentarz</h1>
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    Tytuł
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3 {% if form.errors.username %} border-red-500 {% endif %}" maxlength="150" name="name" autofocus type="text" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="comment">
+                    Treść komentarza
+                </label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="comment" required> </textarea>
+            </div>
+            <div class="flex items-center justify-between p-2">
+                <button class="bg-gray-800 hover:bg-blue-500 text-white font-bold py-2 px-4 mr-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Dodaj komentarz
+                </button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
