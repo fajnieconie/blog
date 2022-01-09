@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<h1>Dodaj komentarz</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Dodaj komentarz</button>
+{% else %}
+    <h1> Zaloguj się aby dodawać komentarze.</h1>
+{% endif %}
+{% endblock %}

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from taggit.models import Tag
 from django.contrib import messages
+from .forms import CommentForm
 
 from .models import Post, Comment
 
@@ -61,6 +62,18 @@ class AddPostView(generic.CreateView):
     fields = '__all__'
     def get_success_url(self):
         return reverse('post-details', kwargs={'pk': self.object.pk})
+
+
+class AddCommentView(generic.CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/post/add_comment.html'
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+    def get_success_url(self):
+       return reverse('post-details', kwargs={'pk': self.object.post.pk})
+
 
 
 class PostByTag(generic.ListView):
